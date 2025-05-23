@@ -1,258 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-    body{
-    font-family: 'Roboto', sans-serif;
-    background: #eef2f7;
-    margin: 0;
-    padding: 1.5rem;
-    display: flex;
-    justify-content: center;
-  }
-
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    background: white;
-    padding: 1.5rem 2rem;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgb(0 0 0 / 0.1);
-    overflow-x: auto;
-  }
-
-  h1 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 0.25rem;
-  }
-
-  /* Controls Section */
-  .controls {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-
-  .controls > div {
-    display: flex;
-    flex-direction: column;
-    min-width: 220px;
-  }
-
-  label {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    color: #34495e;
-  }
-
-  input[type="text"], input[type="month"] {
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
-    border: 1.5px solid #ccc;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  input[type="text"]:focus, input[type="month"]:focus {
-    outline: none;
-    border-color: #2980b9;
-  }
-
-  button.add-student {
-    margin-top: 0.5rem;
-    cursor: pointer;
-    background-color: #27ae60;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    font-size: 1rem;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
-  }
-  button.add-student:hover {
-    background-color: #1e8449;
-  }
-
-  /* Table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    user-select: none;
-  }
-
-  thead {
-    background-color: #2980b9;
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-
-  th, td {
-    border: 1px solid #ddd;
-    padding: 0.3rem;
-    text-align: center;
-    font-size: 0.85rem;
-    min-width: 28px;
-  }
-
-  th.name, td.name {
-    min-width: 150px;
-    text-align: left;
-    position: sticky;
-    left: 0;
-    background-color: #f4f7fb;
-    font-weight: 700;
-    color: #2c3e50;
-    z-index: 5;
-    padding-left: 0.8rem;
-  }
-
-  tbody tr:hover td.name {
-    background-color: #d6eaf8;
-  }
-
-  /* Status cells */
-  td.status-cell {
-    cursor: pointer;
-    vertical-align: middle;
-    transition: background-color 0.3s ease;
-    position: relative;
-  }
-  td.status-cell[aria-disabled="true"] {
-    cursor: not-allowed;
-    background-color: #f5f5f5 !important;
-    color: #aaa !important;
-  }
-
-  /* Status colors */
-  td.status-present {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  td.status-absent {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  td.status-late {
-    background-color: #fff3cd;
-    color: #856404;
-  }
-  td.status-none {
-    background-color: transparent;
-    color: #444;
-  }
-
-  /* Sunday cells with diagonal pattern */
-  td.sunday-cell {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        #f8d7da,
-        #f8d7da 8px,
-        #f5c6cb 8px,
-        #f5c6cb 16px
-      );
-    color: #721c24 !important;
-  }
-
-  /* Reset Buttons */
-  button.reset-student, button.reset-all {
-    background-color: #c0392b;
-    color: white;
-    border: none;
-    padding: 0.25rem 0.7rem;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  button.reset-student:hover, button.reset-all:hover {
-    background-color: #922b21;
-  }
-
-  /* Save button */
-  button#saveBtn {
-    cursor: pointer;
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 8px;
-    margin: 1rem auto 0;
-    display: block;
-    transition: background-color 0.3s ease;
-  }
-  button#saveBtn:hover {
-    background-color: #235a85;
-  }
-
-  /* Legend */
-  .legend {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 1.7rem;
-    font-weight: 600;
-    color: #555;
-    flex-wrap: wrap;
-  }
-  .legend .item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .legend .color-box {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
-    border: 1.5px solid #ccc;
-  }
-  .color-present { background-color: #d4edda; border-color: #c3e6cb;}
-  .color-absent { background-color: #f8d7da; border-color: #f5c6cb;}
-  .color-late { background-color: #fff3cd; border-color: #ffeeba;}
-
-  /* Scroll hints for large tables */
-  .scroll-hint {
-    text-align: center;
-    margin-top: 0.8rem;
-    font-size: 0.85rem;
-    color: #777;
-  }
-
-  /* Tooltips for reset buttons */
-  button.reset-student[title], button.reset-all[title] {
-    position: relative;
-  }
-  button.reset-student[title]:hover::after,
-  button.reset-all[title]:hover::after {
-    content: attr(title);
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #444;
-    color: #fff;
-    padding: 4px 8px;
-    font-size: 0.75rem;
-    border-radius: 4px;
-    white-space: nowrap;
-    z-index: 50;
-    pointer-events: none;
-    opacity: 0.9;
-  }
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advanced Attendance Tracker</title>
+  <link rel="stylesheet" href="attendence.css">
 </head>
 
 <body>
@@ -263,7 +16,8 @@
 
       <div>
         <label for="studentNameInput">Add Student</label>
-        <input type="text" id="studentNameInput" placeholder="Enter student full name" aria-describedby="addStudentHelp" />
+        <input type="text" id="studentNameInput" placeholder="Enter student full name"
+          aria-describedby="addStudentHelp" />
         <button class="add-student" id="addStudentBtn" aria-label="Add student">Add Student</button>
         <small id="addStudentHelp" style="color:#777;">Add student name and press Add</small>
       </div>
@@ -275,11 +29,13 @@
 
       <div style="align-self:center;">
         <button id="saveBtn" aria-label="Save all attendance data">Save Attendance</button>
-        <button id="resetAllBtn" class="reset-all" aria-label="Reset all attendance data" title="Clear all attendance records for all students and days" style="margin-left:10px;">Reset All</button>
+        <button id="resetAllBtn" class="reset-all" aria-label="Reset all attendance data"
+          title="Clear all attendance records for all students and days" style="margin-left:10px;">Reset All</button>
       </div>
     </section>
 
-    <div class="scroll-hint" aria-live="polite" aria-atomic="true">Scroll horizontally to see all dates, vertically to see all students.</div>
+    <div class="scroll-hint" aria-live="polite" aria-atomic="true">Scroll horizontally to see all dates, vertically to
+      see all students.</div>
 
     <table aria-label="Attendance table" id="attendanceTable" tabindex="0">
       <thead>
@@ -295,178 +51,164 @@
     </table>
 
     <div class="legend" aria-label="Attendance legend">
-      <div class="item"><div class="color-box color-present"></div>Present</div>
-      <div class="item"><div class="color-box color-absent"></div>Absent</div>
-      <div class="item"><div class="color-box color-late"></div>Late</div>
-      <div class="item">Sundays auto-marked(red striped)</div>
+      <div class="item">
+        <div class="color-box color-present"></div>Present
+      </div>
+      <div class="item">
+        <div class="color-box color-absent"></div>Absent
+      </div>
+      <div class="item">
+        <div class="color-box color-late"></div>Late
+      </div>
+      <div class="item">Sundays auto-marked Absent (red striped)</div>
     </div>
 
     <section aria-label="Attendance statistics" style="margin-top:1.5rem;">
       <h2 style="text-align:center; color:#34495e; margin-bottom:0.5rem;">Statistics</h2>
-      <div id="statsArea" style="max-width:400px; margin: 0 auto; text-align:center; font-weight:600; font-size:1.1rem; color:#2c3e50;">
+      <div id="statsArea"
+        style="max-width:400px; margin: 0 auto; text-align:center; font-weight:600; font-size:1.1rem; color:#2c3e50;">
         Loading stats...
       </div>
     </section>
   </div>
-</body>
- <script>
-    const students = [];
-    let dates = [];
 
-    const monthSelector = document.getElementById("monthSelector");
-    const studentInput = document.getElementById("studentNameInput");
-    const addStudentBtn = document.getElementById("addStudentBtn");
-    const saveBtn = document.getElementById("saveBtn");
-    const resetAllBtn = document.getElementById("resetAllBtn");
+  <script>
+    let students = [];
 
-    monthSelector.addEventListener("change", () => {
-      const [year, month] = monthSelector.value.split("-").map(Number);
-      if (!year || !month) return;
-      generateDates(year, month);
-      updateAttendanceStructure();
-      renderTable();
-      updateStats();
-    });
+    let statuses = ['none', 'present', 'absent', 'late'];
+    let statusClassMap = { none: 'status-none', present: 'status-present', absent: 'status-absent', late: 'status-late' };
 
-    addStudentBtn.addEventListener("click", () => {
-      const name = studentInput.value.trim();
-      if (name) {
-        const newStudent = {
-          name,
-          attendance: dates.map(d => (d.isSunday ? "absent" : "none"))
-        };
-        students.push(newStudent);
-        studentInput.value = "";
-        renderTable();
-        updateStats();
-      }
-    });
+    let studentNameInput = document.getElementById('studentNameInput');
+    let addStudentBtn = document.getElementById('addStudentBtn');
+    let monthSelector = document.getElementById('monthSelector');
+    let saveBtn = document.getElementById('saveBtn');
+    let resetAllBtn = document.getElementById('resetAllBtn');
+    let tableHeaderRow = document.getElementById('tableHeaderRow');
+    let tableBody = document.getElementById('tableBody');
+    let statsArea = document.getElementById('statsArea');
 
-    saveBtn.addEventListener("click", () => {
-      alert("Attendance saved!");
-    });
+    let attendanceStore = {}, currentYearMonth = null, year = 0, month = 0, daysInMonth = 0, sundays = new Set();
+    const STORAGE_KEY_PREFIX = 'attendanceTrackerData-';
 
-    resetAllBtn.addEventListener("click", () => {
-      if (confirm("Reset all attendance?")) {
-        students.forEach(student => {
-          student.attendance = dates.map(d => (d.isSunday ? "absent" : "none"));
+    function updateCurrentMonth() {
+      [year, month] = monthSelector.value.split('-').map(Number);
+      month--;
+      currentYearMonth = `${year}-${String(month + 1).padStart(2, '0')}`;
+      daysInMonth = new Date(year, month + 1, 0).getDate();
+      sundays = new Set(Array.from({ length: daysInMonth }, (_, i) => new Date(year, month, i + 1).getDay() === 0 ? i + 1 : null).filter(Boolean));
+    }
+
+    function createHeaderRow() {
+      tableHeaderRow.innerHTML = '<th>Name</th>' + Array.from({ length: daysInMonth }, (_, i) => `<th class='${sundays.has(i + 1) ? 'sunday' : ''}'>${i + 1}</th>`).join('');
+    }
+
+    function createStudentRow(student) {
+      let tr = document.createElement('tr');
+      tr.innerHTML = `<td>${student}</td>` + Array.from({ length: daysInMonth }, (_, i) => {
+        let day = i + 1, key = `${currentYearMonth}-${student}-${day}`, status = attendanceStore[key] || 'none';
+        let classList = `status ${statusClassMap[status]} ${sundays.has(day) ? 'sunday' : ''}`;
+        return `<td class='${classList}' data-student='${student}' data-day='${day}' data-status='${status}'>${status !== 'none' ? status[0].toUpperCase() : ''}</td>`;
+      }).join('');
+      tableBody.appendChild(tr);
+    }
+
+    function refreshTable() {
+      updateCurrentMonth();
+      createHeaderRow();
+      tableBody.innerHTML = '';
+      students.forEach(createStudentRow);
+      Array.from(tableBody.querySelectorAll('td[data-student]')).forEach(td => {
+        td.addEventListener('click', () => {
+          let key = `${currentYearMonth}-${td.dataset.student}-${td.dataset.day}`;
+          let current = td.dataset.status, next = statuses[(statuses.indexOf(current) + 1) % statuses.length];
+          td.dataset.status = next;
+          td.textContent = next !== 'none' ? next[0].toUpperCase() : '';
+          td.className = `status ${statusClassMap[next]}${sundays.has(+td.dataset.day) ? ' sunday' : ''}`;
+          attendanceStore[key] = next;
         });
-        renderTable();
-        updateStats();
-      }
-    });
-
-    function generateDates(year, month) {
-      const date = new Date(year, month - 1, 1);
-      dates = [];
-      while (date.getMonth() === month - 1) {
-        dates.push({
-          date: new Date(date),
-          isSunday: date.getDay() === 0
-        });
-        date.setDate(date.getDate() + 1);
-      }
-    }
-
-    function updateAttendanceStructure() {
-      students.forEach(student => {
-        const old = student.attendance;
-        student.attendance = dates.map((d, i) => old[i] || (d.isSunday ? "absent" : "none"));
       });
     }
 
-    function getNextStatus(current) {
-      return current === "none" ? "present" : current === "present" ? "absent" : current === "absent" ? "late" : "none";
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY_PREFIX + currentYearMonth, JSON.stringify({ students, attendance: attendanceStore }));
     }
 
-    function renderTable() {
-      const headerRow = document.getElementById("tableHeaderRow");
-      const tableBody = document.getElementById("tableBody");
-      headerRow.innerHTML = `<th class="name">Student Name</th>`;
-      dates.forEach(date => {
-        const th = document.createElement("th");
-        th.textContent = date.date.getDate();
-        th.title = date.date.toDateString();
-        if (date.isSunday) th.classList.add("sunday-cell");
-        headerRow.appendChild(th);
-      });
-      headerRow.innerHTML += `<th style="min-width:70px;">Reset</th>`;
-      tableBody.innerHTML = "";
-
-      students.forEach((student, studentIndex) => {
-        const tr = document.createElement("tr");
-        const nameTd = document.createElement("td");
-        nameTd.textContent = student.name;
-        nameTd.className = "name";
-        tr.appendChild(nameTd);
-
-       student.attendance.forEach((status, dateIndex) => {
-  const td = document.createElement("td");
-  td.className = `status-cell status-${status}`;
-  td.setAttribute("data-student", studentIndex);
-  td.setAttribute("data-date", dateIndex);
-  if (dates[dateIndex].isSunday) {
-    td.classList.add("sunday-cell");
-    td.setAttribute("aria-disabled", "true");
-    td.textContent = "S";  // Show "S" for Sundays
-  } else {
-    td.textContent = status !== "none" ? status[0].toUpperCase() : "";
-    td.addEventListener("click", () => {
-      const current = students[studentIndex].attendance[dateIndex];
-      students[studentIndex].attendance[dateIndex] = getNextStatus(current);
-      renderTable();
-      updateStats();
-    });
-  }
-  tr.appendChild(td);
-});
-
-
-        const resetTd = document.createElement("td");
-        const resetBtn = document.createElement("button");
-        resetBtn.textContent = "Reset";
-        resetBtn.className = "reset-student";
-        resetBtn.title = "Reset this student's attendance";
-        resetBtn.addEventListener("click", () => resetStudent(studentIndex));
-        resetTd.appendChild(resetBtn);
-        tr.appendChild(resetTd);
-
-        tableBody.appendChild(tr);
-      });
-    }
-
-    function resetStudent(index) {
-      if (confirm(`Reset attendance for ${students[index].name}?`)) {
-        students[index].attendance = dates.map(d => (d.isSunday ? "absent" : "none"));
-        renderTable();
-        updateStats();
-      }
+    function loadFromStorage() {
+      let data = JSON.parse(localStorage.getItem(STORAGE_KEY_PREFIX + currentYearMonth) || '{}');
+      students = data.students || [];
+      attendanceStore = data.attendance || {};
     }
 
     function updateStats() {
-  const counts = {
-    present: 0,
-    absent: 0,
-    late: 0
-  };
-  students.forEach(s => {
-    s.attendance.forEach((status, index) => {
-      if (!dates[index].isSunday && counts.hasOwnProperty(status)) {
-        counts[status]++;
+      statsArea.innerHTML = '<h3>Attendance Summary</h3><table><tr><th>Name</th><th>Present</th><th>Absent</th><th>Late</th><th>Total</th></tr>' + students.map(s => {
+        let p = 0, a = 0, l = 0, t = 0;
+        for (let d = 1; d <= daysInMonth; d++) {
+          let st = attendanceStore[`${currentYearMonth}-${s}-${d}`];
+          if (st && st !== 'none') {
+            t++;  // increment total for any non-none status
+            if (st === 'present') p++;
+            else if (st === 'absent') a++;
+            else if (st === 'late') l++;
+          }
+        }
+        return `<tr><td>${s}</td><td>${p}</td><td>${a}</td><td>${l}</td><td>${t}</td></tr>`;
+      }).join('') + '</table>';
+    }
+
+    addStudentBtn.addEventListener('click', () => {
+      let name = studentNameInput.value.trim();
+      if (name && !students.includes(name)) {
+        students.push(name);
+        createStudentRow(name);
+        refreshTable();
+        studentNameInput.value = '';
       }
     });
-  });
 
-  statsArea.innerHTML = `
-    <div style="display: flex; justify-content: space-around; gap: 1rem; flex-wrap: wrap;">
-      <div>Total Students: ${students.length}</div>
-      <div>Present: ${counts.present}</div>
-      <div>Absent: ${counts.absent}</div>
-      <div>Late: ${counts.late}</div>
-    </div>
-  `;
-}
+    monthSelector.addEventListener('change', () => {
+      loadFromStorage();
+      refreshTable();
+      updateStats();
+    });
 
-    
+    saveBtn.addEventListener('click', () => {
+      saveToStorage();
+      updateStats();
+      alert('Attendance saved!');
+    });
+
+    resetAllBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset all data for this month?')) {
+        localStorage.removeItem(STORAGE_KEY_PREFIX + currentYearMonth);
+        students = [];
+        attendanceStore = {};
+        refreshTable();
+        updateStats();
+      }
+    });
+
+    (function initialize() {
+      let now = new Date();
+      let thisMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      monthSelector.value = thisMonth;
+      loadFromStorage();
+      refreshTable();
+      updateStats();
+    })();
+
+    td.addEventListener('click', () => {
+      let currentStatus = td.dataset.status;
+      let newStatusIndex = (statuses.indexOf(currentStatus) + 1) % statuses.length;
+      let newStatus = statuses[newStatusIndex];
+      td.dataset.status = newStatus;
+      td.textContent = newStatus === 'none' ? '' : newStatus[0].toUpperCase();
+      td.className = `status ${statusClassMap[newStatus]}`;
+      attendanceStore[key] = newStatus;
+      updateStats(); // <- add this line
+    });
+
   </script>
+
+</body>
+
 </html>
