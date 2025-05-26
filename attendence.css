@@ -79,7 +79,6 @@ body {
   table {
     width: 100%;
     border-collapse: collapse;
-    user-select: none;
   }
 
   thead {
